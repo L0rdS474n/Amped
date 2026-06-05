@@ -8,4 +8,4 @@ repository.workspace = true
 [dependencies]
 amped-core = { path = "../amped-core" }
 amped-registry = { path = "../amped-registry" }
-thiserror = "1"
+thiserror = "2"
