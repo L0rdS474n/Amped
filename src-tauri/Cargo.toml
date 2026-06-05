@@ -1,0 +1,11 @@
+[package]
+name = "src-tauri"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "amped"
+path = "src/main.rs"
+
+[dependencies]
+amped-host = { path = "../crates/amped-host" }

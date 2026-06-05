@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "id": "com.easee.charger",
+      "name": "Easee Charger",
+      "version": "0.1.0",
+      "author": "Amped",
+      "description": "Test fixture: missing checksum field must be rejected.",
+      "manifest_url": "https://example.com/plugins/easee/amped.plugin.toml",
+      "release_url": "https://example.com/plugins/easee/easee-0.1.0.wasm",
+      "screenshots": [],
+      "min_amped_version": "0.1.0"
+    }
+  ]
+}

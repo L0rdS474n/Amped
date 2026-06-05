@@ -1,0 +1,9 @@
+[package]
+name = "amped-host"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+amped-core = { path = "../amped-core" }
+amped-registry = { path = "../amped-registry" }
+thiserror = "1"

@@ -1,0 +1,25 @@
+schema_version = 1
+id            = "com.easee.charger"
+name          = "Easee Charger"
+version       = "0.1.0"
+author        = "Amped"
+description   = "Read-only status for Easee chargers (power, session energy, mode)."
+
+[permissions]
+network    = ["api.easee.com"]
+secrets    = ["easee.username", "easee.password", "easee.refresh_token"]
+filesystem = []
+
+[config_schema]
+fields = [
+  { key = "username",   type = "string", secret = true,  required = true },
+  { key = "password",   type = "string", secret = true,  required = true },
+  { key = "charger_id", type = "string", required = false, help = "Empty = show all." },
+]
+
+[[widgets]]
+id      = "charger_status"
+title   = "Charger Status"
+kind    = "stat_card"
+refresh = { model = "interval", secs = 30 }
+fields  = ["op_mode", "power_kw", "session_energy_kwh", "online"]

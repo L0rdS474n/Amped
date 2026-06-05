@@ -1,0 +1,81 @@
+// WIT contract for amped:plugin@0.1.0
+// SemVer-governed — breaking changes require an ADR + version bump (ADR-0001(c)).
+//
+// Security invariant (ADR-0001(e), AC-M1-10):
+//   `Authorization` is HOST-OWNED and HOST-INJECTED.
+//   Plugins MUST NOT supply an Authorization header. The `http-request` type
+//   carries only a constrained allow-list of non-authentication headers.
+//   Any Authorization the host injects overrides any caller-supplied value.
+//
+// B3 resolution: `widget-data` is defined as a record here with a JSON-string
+//   payload field, because `serde_json::Value` cannot cross the Component Model boundary.
+
+package amped:plugin@0.1.0;
+
+interface host {
+    // HTTP request plugin may submit. Authorization is deliberately excluded from
+    // headers — the host injects it from the OS keyring after permission check.
+    // Only headers in the allowlist (Content-Type, Accept, etc.) may be set by the plugin.
+    record http-request {
+        method:  string,
+        url:     string,
+        // Allowlisted non-auth headers only. Host STRIPS any Authorization or
+        // Proxy-Authorization entry before adding its own bearer token.
+        headers: list<tuple<string, string>>,
+        body:    option<list<u8>>,
+    }
+
+    record http-response {
+        status: u16,
+        body:   list<u8>,
+    }
+
+    // Allowed ONLY if manifest.permissions.network matches the request url-host.
+    // Host injects Authorization: Bearer <token> from OS keyring.
+    // Plugin never sees credentials.
+    http-fetch: func(req: http-request) -> result<http-response, string>;
+
+    // Structured log — tokens/passwords are redacted host-side; guest never sees raw secrets.
+    log: func(level: string, msg: string);
+}
+
+// Provenance: source classification for every piece of widget data.
+//
+// Locked payload semantics (M1 contract — do not change without ADR + version bump):
+//   live        — data arrived from the live API in this fetch cycle; no payload.
+//   mock        — data is synthesized (demo/dev mode); no payload.
+//   cached(u64) — live fetch failed; returning cached value; payload = age in SECONDS since
+//                 the cached value was fetched. Dashboard uses this to show staleness.
+//   degraded(string) — plugin is in error state; no usable data; payload = human-readable
+//                      reason shown in the widget error card. Dashboard never crashes.
+variant provenance {
+    live,
+    mock,
+    cached(u64),      // seconds since the cached data was originally fetched
+    degraded(string), // error reason displayed in the widget error card
+}
+
+// B3: widget-data record with JSON-string payload (serde_json::Value cannot cross the
+// Component Model boundary; the host validates payload against the widget schema
+// after the boundary).
+record widget-data {
+    widget-id:     string,
+    provenance:    provenance,
+    fetched-at-ms: u64,       // Unix epoch milliseconds; deterministic; no wall-clock in guest.
+    payload:       string,    // JSON-encoded data; host validates against widget schema.
+}
+
+world amped-plugin {
+    import host;
+
+    // Returns the serialised PluginManifest as a JSON string.
+    export manifest: func() -> string;
+
+    // Called once after load; plugin may perform one-time setup.
+    // Host has already granted capabilities from manifest permissions.
+    export init: func() -> result<_, string>;
+
+    // Fetch data for the given widget id.
+    // Returns widget-data or an error string (displayed as Degraded in the dashboard).
+    export fetch: func(widget-id: string) -> result<widget-data, string>;
+}

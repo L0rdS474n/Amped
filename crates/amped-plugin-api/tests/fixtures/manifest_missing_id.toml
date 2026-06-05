@@ -1,0 +1,18 @@
+schema_version = 1
+# id is intentionally absent — must produce ManifestError::MissingField
+name          = "Easee Charger"
+version       = "0.1.0"
+author        = "Amped"
+description   = "Test fixture for missing id field."
+
+[permissions]
+network    = ["api.easee.com"]
+secrets    = []
+filesystem = []
+
+[[widgets]]
+id      = "charger_status"
+title   = "Charger Status"
+kind    = "stat_card"
+refresh = { model = "interval", secs = 30 }
+fields  = []

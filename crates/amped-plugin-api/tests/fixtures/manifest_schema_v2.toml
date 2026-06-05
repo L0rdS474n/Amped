@@ -1,0 +1,18 @@
+schema_version = 2
+id            = "com.easee.charger"
+name          = "Easee Charger"
+version       = "0.1.0"
+author        = "Amped"
+description   = "Test fixture: schema_version=2 must be rejected."
+
+[permissions]
+network    = ["api.easee.com"]
+secrets    = []
+filesystem = []
+
+[[widgets]]
+id      = "charger_status"
+title   = "Charger Status"
+kind    = "stat_card"
+refresh = { model = "interval", secs = 30 }
+fields  = []

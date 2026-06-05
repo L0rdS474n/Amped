@@ -1,0 +1,10 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/amped-plugin-api",
+    "crates/amped-core",
+    "crates/amped-registry",
+    "crates/amped-host",
+    "crates/amped-plugin-easee",
+    "src-tauri",
+]
