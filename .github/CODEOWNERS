@@ -1,0 +1,10 @@
+# Code owners for Amped.
+# These owners are requested for review automatically on every pull request.
+# See https://docs.github.com/articles/about-code-owners
+
+# Default owner for everything in the repo.
+*       @L0rdS474n
+
+# The plugin contract is the most design-critical surface — guard it explicitly.
+/crates/amped-plugin-api/   @L0rdS474n
+/docs/adr/                  @L0rdS474n
