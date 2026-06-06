@@ -9,5 +9,11 @@ repository.workspace = true
 name = "amped"
 path = "src/main.rs"
 
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
 [dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+amped-plugin-api = { path = "../crates/amped-plugin-api" }
 amped-host = { path = "../crates/amped-host" }

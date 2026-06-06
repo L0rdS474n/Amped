@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Core permissions for the Amped main window. Application-defined commands (e.g. list_plugins) are exposed via the invoke handler and need no extra ACL.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}
