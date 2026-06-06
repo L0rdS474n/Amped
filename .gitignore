@@ -2,3 +2,6 @@
 /Amped.iml
 .idea/
 **/target
+
+# Stray tooling log (not part of Amped).
+hexstrike.log

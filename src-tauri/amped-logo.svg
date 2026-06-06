@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="amped" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2ee27a"/>
+      <stop offset="0.55" stop-color="#25d3c4"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="#070b09"/>
+  <rect x="40" y="40" width="944" height="944" rx="196" fill="url(#amped)"/>
+  <path d="M546 172 L206 580 L512 580 L478 852 L818 444 L512 444 Z" fill="#06120c"/>
+</svg>
