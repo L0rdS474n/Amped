@@ -18,7 +18,7 @@ jobs:
     name: ci
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # src-tauri (Tauri 2) needs the GTK/WebKit stack to compile on Linux.
       - name: Install Tauri system dependencies
